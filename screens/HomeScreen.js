@@ -15,25 +15,23 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { width } = Dimensions.get('window');
 
 const CATEGORY_COLORS = {
-  Housing: '#4F46E5',
   Food: '#10B981',
   Transport: '#F59E0B',
-  Bills: '#EF4444',
-  Entertainment: '#8B5CF6',
-  Health: '#EC4899',
   Shopping: '#3B82F6',
-  Other: '#6B7280',
+  Bills: '#EF4444',
+  Health: '#EC4899',
+  Entertainment: '#8B5CF6',
+  Other: '#6B7280'
 };
 
 const CATEGORY_ICONS = {
-  Housing: 'home-city',
   Food: 'food',
-  Transport: 'bus-multiple',
-  Bills: 'file-document-outline',
-  Entertainment: 'movie-open',
-  Health: 'heart-pulse',
+  Transport: 'bus',
   Shopping: 'shopping',
-  Other: 'dots-horizontal',
+  Bills: 'file-document',
+  Health: 'heart-pulse',
+  Entertainment: 'movie',
+  Other: 'dots-horizontal'
 };
 
 export default function HomeScreen({ navigation }) {
@@ -166,13 +164,17 @@ export default function HomeScreen({ navigation }) {
       return (
         <View style={styles.emptyContainer}>
           <Text style={[styles.emptyText, { color: currentTheme.textSecondary }]}>
-            Henüz bütçe tanımlanmamış
+            No budget set
           </Text>
         </View>
       );
     }
 
-    return Object.entries(budgets).map(([category, budget]) => {
+    // Sadece TransactionContext'te tanımlı kategorileri göster
+    const validCategories = ['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'];
+    
+    return validCategories.map(category => {
+      const budget = budgets[category] || 0;
       const progress = getBudgetProgress(category);
       const color = progress > 100 ? '#EF4444' : progress > 80 ? '#F59E0B' : '#10B981';
       
@@ -263,22 +265,22 @@ export default function HomeScreen({ navigation }) {
           colors={['#6366F1', '#8B5CF6']}
           style={styles.gradient}
         >
-          <View style={styles.summaryRow}>
+        <View style={styles.summaryRow}>
             <View style={styles.summaryItem}>
-              <Text style={styles.summaryLabel}>Income</Text>
+          <Text style={styles.summaryLabel}>Income</Text>
               <Text style={styles.summaryValue}>{getTotalIncome().toFixed(2)} TL</Text>
-            </View>
+        </View>
             <View style={styles.summaryItem}>
-              <Text style={styles.summaryLabel}>Expenses</Text>
+          <Text style={styles.summaryLabel}>Expenses</Text>
               <Text style={styles.summaryValue}>{getTotalExpenses().toFixed(2)} TL</Text>
             </View>
-          </View>
+        </View>
           <View style={styles.balanceContainer}>
-            <Text style={styles.balanceLabel}>Balance</Text>
+          <Text style={styles.balanceLabel}>Balance</Text>
             <Text style={styles.balanceValue}>{getBalance().toFixed(2)} TL</Text>
           </View>
         </LinearGradient>
-      </View>
+        </View>
 
       <View style={styles.dateRangeContainer}>
         {dateRanges.map((range) => (
@@ -313,7 +315,7 @@ export default function HomeScreen({ navigation }) {
                 size={24} 
                 color={isDarkMode ? '#fff' : '#000'} 
               />
-            </View>
+                </View>
             <View style={styles.transactionInfo}>
               <Text style={[styles.transactionTitle, { color: isDarkMode ? '#fff' : '#000' }]}>
                 {transaction.installment ? transaction.installmentDescription : transaction.title}
@@ -321,16 +323,16 @@ export default function HomeScreen({ navigation }) {
               <Text style={[styles.transactionCategory, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>
                 {transaction.category}
               </Text>
-            </View>
+                </View>
             <Text style={[
               styles.transactionAmount,
               { color: transaction.amount > 0 ? '#10B981' : '#EF4444' }
             ]}>
               {transaction.amount > 0 ? '+' : ''}{transaction.amount.toFixed(2)} TL
             </Text>
-          </View>
+              </View>
         ))}
-      </View>
+        </View>
 
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddTransaction')}>
         <MaterialCommunityIcons name="plus" size={24} color="#fff" />

@@ -115,7 +115,7 @@ export default function AddTransactionScreen() {
         await addTransaction(transaction);
       }
 
-      navigation.goBack();
+    navigation.goBack();
     } catch (error) {
       console.error('Error adding transaction:', error);
       alert('İşlem eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
@@ -136,7 +136,7 @@ export default function AddTransactionScreen() {
       <View style={[styles.formContainer, { backgroundColor: isDarkMode ? '#1F2937' : '#fff' }]}>
         <View style={styles.formGroup}>
           <Text style={[styles.formLabel, { color: isDarkMode ? '#fff' : '#4b5563' }]}>Amount</Text>
-          <TextInput
+      <TextInput
             style={[styles.formInput, { 
               backgroundColor: isDarkMode ? '#374151' : '#fff',
               color: isDarkMode ? '#fff' : '#000',
@@ -144,21 +144,21 @@ export default function AddTransactionScreen() {
             }]}
             placeholder="0.00 TL"
             placeholderTextColor={isDarkMode ? '#9CA3AF' : '#6B7280'}
-            keyboardType="numeric"
+        keyboardType="numeric"
             value={formData.amount}
             onChangeText={(text) => setFormData(prev => ({ ...prev, amount: text }))}
-          />
+      />
         </View>
 
         <View style={styles.formGroup}>
           <Text style={[styles.formLabel, { color: isDarkMode ? '#fff' : '#4b5563' }]}>Description</Text>
-          <TextInput
+      <TextInput
             style={[styles.formInput, { 
               backgroundColor: isDarkMode ? '#374151' : '#fff',
               color: isDarkMode ? '#fff' : '#000',
               borderColor: isDarkMode ? '#4B5563' : '#D1D5DB'
             }]}
-            placeholder="What was this for?"
+        placeholder="What was this for?"
             placeholderTextColor={isDarkMode ? '#9CA3AF' : '#6B7280'}
             value={formData.title}
             onChangeText={(text) => setFormData(prev => ({ ...prev, title: text }))}
@@ -203,12 +203,12 @@ export default function AddTransactionScreen() {
                 <Text style={[styles.categoryName, { color: isDarkMode ? '#fff' : '#4b5563' }]}>
                   {category}
                 </Text>
-              </TouchableOpacity>
-            ))}
+          </TouchableOpacity>
+        ))}
           </View>
-        </View>
+      </View>
 
-        <View style={styles.switchRow}>
+      <View style={styles.switchRow}>
           <Text style={[styles.switchLabel, { color: isDarkMode ? '#fff' : '#000' }]}>
             Recurring Transaction
           </Text>
@@ -224,9 +224,9 @@ export default function AddTransactionScreen() {
               { transform: [{ translateX: formData.isRecurring ? 20 : 0 }] }
             ]} />
           </TouchableOpacity>
-        </View>
+      </View>
 
-        <View style={styles.switchRow}>
+      <View style={styles.switchRow}>
           <Text style={[styles.switchLabel, { color: isDarkMode ? '#fff' : '#000' }]}>
             Installment Payment
           </Text>
@@ -242,20 +242,20 @@ export default function AddTransactionScreen() {
               { transform: [{ translateX: formData.isInstallment ? 20 : 0 }] }
             ]} />
           </TouchableOpacity>
-        </View>
+      </View>
 
         {formData.isInstallment && (
           <View style={styles.formGroup}>
             <Text style={[styles.formLabel, { color: isDarkMode ? '#fff' : '#4b5563' }]}>
               Number of Installments
             </Text>
-            <TextInput
+          <TextInput
               style={[styles.formInput, { 
                 backgroundColor: isDarkMode ? '#374151' : '#fff',
                 color: isDarkMode ? '#fff' : '#000',
                 borderColor: isDarkMode ? '#4B5563' : '#D1D5DB'
               }]}
-              keyboardType="numeric"
+            keyboardType="numeric"
               placeholder="Enter number of installments"
               placeholderTextColor={isDarkMode ? '#9CA3AF' : '#6B7280'}
               value={formData.totalInstallments}
@@ -271,8 +271,8 @@ export default function AddTransactionScreen() {
         )}
 
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.submitButtonText}>Add Transaction</Text>
-        </TouchableOpacity>
+        <Text style={styles.submitButtonText}>Add Transaction</Text>
+      </TouchableOpacity>
       </View>
 
       {showDatePicker && (
